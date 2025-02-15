@@ -75,7 +75,12 @@ const RoleTable = ({ roles }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           {loading ? (
-            <FadeLoader />
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "200px" }}
+            >
+              <FadeLoader />
+            </div>
           ) : formData.length > 0 ? (
             <table className="table table-striped">
               <thead>
