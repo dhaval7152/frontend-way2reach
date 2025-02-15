@@ -2,16 +2,23 @@ import React, { useState } from "react";
 import { getFormsByRole } from "../api/apiService";
 import Modal from "react-modal";
 import { capitalizeFirstLetter } from "../helpers/helper";
-
+import FadeLoader from "react-spinners/FadeLoader";
 const RoleTable = ({ roles }) => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [formData, setFormData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleViewData = async (role) => {
     setSelectedRole(role);
-    const data = await getFormsByRole(role);
-    setFormData(data);
+    setLoading(true);
+    try {
+      const data = await getFormsByRole(role);
+      setFormData(data);
+    } catch (error) {
+      console.error("Error fetching role data:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -67,7 +74,9 @@ const RoleTable = ({ roles }) => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          {formData.length > 0 ? (
+          {loading ? (
+            <FadeLoader />
+          ) : formData.length > 0 ? (
             <table className="table table-striped">
               <thead>
                 <tr>
