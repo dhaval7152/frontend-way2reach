@@ -30,7 +30,6 @@ const Dashboard = () => {
         </Modal>
       )}
       <RoleTable roles={roles.map((role) => role.role)} />{" "}
-      {/* Pass only role names */}
     </div>
   );
 };
